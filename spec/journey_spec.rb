@@ -23,4 +23,13 @@ describe Journey do
   it "should return the minimum fare in normal circumstances" do
     expect(journey.fare).to eq 1
   end
+
+  it { is_expected.to respond_to :finish }
+
+  it "should return exit_station when finished the journey" do
+    journey = Journey.new(first_station, nil)
+    journey.finish(second_station)
+    expect(journey.exit_station).to eq second_station
+  end
+
 end

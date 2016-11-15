@@ -17,9 +17,13 @@ class Journey
       MINIMUM_FARE
     end
   end
-  
+
   def incomplete_journey?
     entry_station.nil? || exit_station.nil?
+  end
+
+  def finish(station)
+    @exit_station = station
   end
 
   private

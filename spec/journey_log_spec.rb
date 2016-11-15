@@ -27,9 +27,18 @@ describe JourneyLog do
   end
 
   it "should create a new journey if it is a complete journey" do
-    pending("finish the #finish method")
-    expect(journey_log.current_journey).not_to be_incomplete_journey 
+    journey_log.start(station)
+    journey_log.finish(second_station)
+    new_journey = journey_log.current_journey
+    expect(journey_log.journeys[1]).to eq new_journey
   end
 
+  it { is_expected.to respond_to :finish }
+
+  it "should finish journey on current_journey when given another station" do
+    journey_log.start(station)
+    journey_log.finish(second_station)
+    expect(journey_log.journeys[-1]).not_to be_incomplete_journey
+  end
 
 end
