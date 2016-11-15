@@ -23,4 +23,18 @@ describe OysterCard do
     expect(oyster.balance).to eq 30
   end
 
+  it "should start not in a journey" do
+    expect(oyster).not_to be_in_journey
+  end
+
+  it "should touch in" do
+    oyster.touch_in
+    expect(oyster).to be_in_journey
+  end
+
+  it "should touch out too" do
+    oyster.touch_in
+    oyster.touch_out
+    expect(oyster).not_to be_in_journey
+  end
 end
