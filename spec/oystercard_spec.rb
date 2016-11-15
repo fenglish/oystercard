@@ -2,8 +2,8 @@ require 'oystercard'
 
 describe OysterCard do
   subject(:oyster) {OysterCard.new}
-      let(:station1){double :station, name: :aldgate_east}
-      let(:station2){double :station, name: :liverpool_street}
+      let(:station1){double :station, name: :aldgate_east, zone: 1}
+      let(:station2){double :station, name: :liverpool_street, zone: 1}
 
   it "should have a balance" do
     expect(oyster.balance).to eq 0
@@ -43,13 +43,14 @@ describe OysterCard do
 
   it "should deduct money on touching out" do
     oyster.top_up 50
+    oyster.touch_in(station1)
     expect{oyster.touch_out(station2)}.to change{oyster.balance}.by -1 * OysterCard::MINIMUM_BALANCE
   end
 
   it "should save entry station on touching in" do
     oyster.top_up(1)
     oyster.touch_in(station1)
-    expect(oyster.entry_station).to eq station1.name
+    expect(oyster.entry_station.name).to eq station1.name
   end
 
   it "should return nil when touch_out at station" do
@@ -67,8 +68,8 @@ describe OysterCard do
     oyster.top_up(1)
     oyster.touch_in(station1)
     oyster.touch_out(station2)
-    journey = [:aldgate_east, :liverpool_street]
-    expect(oyster.journey_history).to eq [journey]
+    expect(oyster.journey_history[0].entry_station).to eq station1
+    expect(oyster.journey_history[0].exit_station).to eq station2
   end
 
 end
