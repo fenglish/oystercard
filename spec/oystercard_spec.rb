@@ -16,4 +16,11 @@ describe OysterCard do
     oyster.top_up(80)
     expect{oyster.top_up(20)}.to raise_error "£90 limit breached"
   end
+
+  it "should deduct money for journey" do
+    oyster.top_up(50)
+    oyster.deduct(20)
+    expect(oyster.balance).to eq 30
+  end
+
 end
