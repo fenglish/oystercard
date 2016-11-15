@@ -6,4 +6,10 @@ describe OysterCard do
   it "should have a balance" do
     expect(oyster.balance).to eq 0
   end
+
+  it "should top up money" do
+    oyster.top_up(50)
+    expect(oyster.balance).to eq 50 
+  end
+
 end
