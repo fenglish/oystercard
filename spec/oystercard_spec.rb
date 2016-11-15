@@ -28,13 +28,20 @@ describe OysterCard do
   end
 
   it "should touch in" do
+    oyster.top_up(1)
     oyster.touch_in
     expect(oyster).to be_in_journey
   end
 
   it "should touch out too" do
+    oyster.top_up(1)
     oyster.touch_in
     oyster.touch_out
     expect(oyster).not_to be_in_journey
   end
+
+  it "should fail when money is less than £1" do
+    expect{oyster.touch_in}.to raise_error "less than minimum balance(£1)"
+  end
+
 end

@@ -3,6 +3,7 @@ class OysterCard
   attr_reader :balance
 
   LIMIT = 90
+  MINIMUM_BALANCE = 1
 
   def initialize
     @balance = 0
@@ -23,6 +24,7 @@ class OysterCard
   end
 
   def touch_in
+    fail "less than minimum balance(£1)" if under_minimum_balance?
     @in_journey = true
   end
 
@@ -31,6 +33,11 @@ class OysterCard
   end
   private
   def limit_breach?(money)
-    @balance+money > LIMIT
+    balance + money > LIMIT
   end
+
+  def under_minimum_balance?
+    balance < MINIMUM_BALANCE
+  end
+
 end
