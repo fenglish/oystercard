@@ -17,13 +17,15 @@ class Journey
       MINIMUM_FARE
     end
   end
+  
+  def incomplete_journey?
+    entry_station.nil? || exit_station.nil?
+  end
 
   private
 
   PENALTY_FARE = 6
   MINIMUM_FARE = OysterCard::MINIMUM_BALANCE
-  
-  def incomplete_journey?
-    entry_station.nil? || exit_station.nil?
-  end
+
+
 end
