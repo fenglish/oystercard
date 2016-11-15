@@ -14,14 +14,9 @@ describe OysterCard do
 
   it "should fail if trying to top up beyond limit" do
     oyster.top_up(80)
-    expect{oyster.top_up(20)}.to raise_error "£90 limit breached"
+    expect{oyster.top_up(20)}.to raise_error "£#{OysterCard::LIMIT} limit breached"
   end
 
-  it "should deduct money for journey" do
-    oyster.top_up(50)
-    oyster.deduct(20)
-    expect(oyster.balance).to eq 30
-  end
 
   it "should start not in a journey" do
     expect(oyster).not_to be_in_journey
@@ -42,6 +37,11 @@ describe OysterCard do
 
   it "should fail when money is less than £1" do
     expect{oyster.touch_in}.to raise_error "less than minimum balance(£1)"
+  end
+
+  it "should deduct money on touching out" do
+    oyster.top_up 50
+    expect{oyster.touch_out}.to change{oyster.balance}.by -1 * OysterCard::MINIMUM_BALANCE
   end
 
 end

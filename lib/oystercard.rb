@@ -15,29 +15,32 @@ class OysterCard
     @balance += money
   end
 
-  def deduct(money)
-    @balance -= money
-  end
-
   def in_journey?
     @in_journey
   end
 
   def touch_in
-    fail "less than minimum balance(£1)" if under_minimum_balance?
+    fail "less than minimum balance(£#{MINIMUM_BALANCE})" if under_minimum_balance?
     @in_journey = true
   end
 
   def touch_out
     @in_journey = false
+    deduct(MINIMUM_BALANCE)
   end
+
   private
+
   def limit_breach?(money)
     balance + money > LIMIT
   end
 
   def under_minimum_balance?
     balance < MINIMUM_BALANCE
+  end
+
+  def deduct(money)
+    @balance -= money
   end
 
 end
